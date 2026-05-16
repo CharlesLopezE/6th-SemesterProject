@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No JetLag - My Trips</title>
+    <link rel="stylesheet" href="./NoJetLag.css">
+</head>
+<body class="my-trip-activities-page">
+
+    <header>
+    <div class="logo-section">
+        <span>🌐</span>
+        <span style="font-size: 22px; font-weight: bold;">No JetLag</span>
+    </div>
+
+    <nav class="nav-links">
+        <a href="homepage.html">Home</a>
+        <a href="savedschedules.html">Schedule</a>
+    </nav>
+
+    <div class="user-section">
+        <div class="profile-icon" id="profileIcon"></div>
+            <button class="logout-btn" id="logoutBtn">Log Out</button>
+    </div>
+</header>
+
+    <main>
+
+    <!-- ================= TAB BUTTONS ================= -->
+    <div class="tab-bar">
+        <div class="tab active-tab" id="tripsTab">My Trips</div>
+        <div class="tab" id="activityTab">My Activity</div>
+    </div>
+
+    <!-- ================= TRIPS ================= -->
+    <div class="panel active" id="tripsPanel">
+        <h3>My Trips</h3>
+        <div id="tripsContainer"></div>
+    </div>
+
+    <!-- ================= ACTIVITY ================= -->
+    <div class="panel" id="activityPanel">
+        <h3>Recent Activity</h3>
+        <div id="activityTimeline"></div>
+    </div>
+
+</main>
+
+    <footer>
+        <a href="#" id="aboutBtn">About</a>
+        <a href="#" id="contactBtn">Contact Us</a>
+        <a href="#" id="settingsBtn">Settings ⚙️</a>
+    </footer>
+
+    <!-- ================= ABOUT MODAL ================= -->
+<div id="aboutModal" class="modal">
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeModal">&times;</span>
+
+        <h2>No Jet Lag</h2>
+
+        <p>What is it about?<p>
+
+        <ul style="line-height: 1.6; padding-left: 20px;">
+            <li>
+                No Jet Lag is a travel assistant platform designed to help travelers
+                reduce jet lag by generating personalized sleep schedules based on
+                their flight details.
+            </li>
+
+            <li>
+                Travelers can save schedules, receive notifications during travel,
+                and follow guided sleep patterns to adjust smoothly across time zones.
+            </li>
+
+            <li>
+                This system integrates a website application, using custom APIs
+                and GPS data to optimize travel experiences.
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<!-- ================= CONTACT MODAL ================= -->
+<div id="contactModal" class="modal">
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeContactModal">&times;</span>
+
+        <h2>Contact Us</h2>
+
+        <ul style="line-height: 1.6; padding-left: 20px;">
+            <li><strong>Email:</strong> support@nojetlag.com</li>
+            <li><strong>Phone:</strong> (123) 456-7890</li>
+            <li><strong>Hours:</strong> Mon–Fri, 9AM – 6PM</li>
+            <li><strong>Hours:</strong> Sat–Sun, 10AM – 5PM</li>
+        </ul>
+
+        <p style="margin-top:15px; font-size: 0.9rem;">
+            We’re here to help you travel smarter ✈️
+        </p>
+
+    </div>
+</div>
+<!-- ================= SETTINGS MODAL ================= -->
+<div id="settingsModal" class="modal">
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeSettings">&times;</span>
+
+        <h2>Settings ⚙️</h2>
+
+        <h3>Theme</h3>
+        <div style="display:flex; gap:15px; margin-top:10px;">
+            <button class="theme-btn" onclick="setTheme('dark')">🌙 Dark</button>
+            <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+        </div>
+
+    </div>
+</div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supdb.config.js"></script>
+
+    <script>
+    /* ================= TAB SWITCH ================= */
+    const tripsTab = document.getElementById("tripsTab");
+    const activityTab = document.getElementById("activityTab");
+
+    const tripsPanel = document.getElementById("tripsPanel");
+    const activityPanel = document.getElementById("activityPanel");
+
+    tripsTab.addEventListener("click", () => {
+        tripsPanel.classList.add("active");
+        activityPanel.classList.remove("active");
+
+        tripsTab.classList.add("active-tab");
+        activityTab.classList.remove("active-tab");
+    });
+
+    activityTab.addEventListener("click", () => {
+        activityPanel.classList.add("active");
+        tripsPanel.classList.remove("active");
+
+        activityTab.classList.add("active-tab");
+        tripsTab.classList.remove("active-tab");
+    });
+
+    /* ================= LOGOUT ================= */
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+        await supabaseClient.auth.signOut();
+        window.location.href = "login.html";
+    });
+    </script>
+
+<script>
+async function loadTrips() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) return;
+
+    const { data, error } = await supabaseClient
+        .from("trips")
+        .select("*")
+        .eq("email", user.email)
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Error loading trips:", error.message);
+        return;
+    }
+
+    const container = document.getElementById("tripsContainer");
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No trips yet ✈️</p>";
+        return;
+    }
+
+    data.forEach(trip => {
+        const card = document.createElement("div");
+        card.className = "trip-card";
+        card.dataset.tripId = trip.id;
+
+        card.innerHTML = `
+            <div class="trip-card-header">
+                <h3>${trip.from_city} → ${trip.to_city}</h3>
+                <button class="delete-btn" onclick="deleteTrip(${trip.id}, this)">🗑 Delete</button>
+            </div>
+            <div class="trip-details">
+                <strong>Airport:</strong> ${trip.airport || "N/A"}<br>
+                <strong>Airline:</strong> ${trip.airline || "N/A"}<br>
+                <strong>Flight:</strong> ${trip.flight_number}<br>
+                <strong>Gate:</strong> ${trip.gate_number}<br>
+                <strong>Departure:</strong> ${trip.departure_time}<br>
+                <strong>Arrival:</strong> ${trip.arrival_time}
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-labels">
+                    <span>🛫 ${trip.departure_time}</span>
+                    <span class="progress-status" id="status-${trip.id}">--</span>
+                    <span>🛬 ${trip.arrival_time}</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="fill-${trip.id}" style="width: 0%"></div>
+                    <div class="progress-plane" id="plane-${trip.id}" style="left: 0%">✈️</div>
+                </div>
+                <div class="progress-percent" id="percent-${trip.id}">0% complete</div>
+            </div>
+        `;
+
+        container.appendChild(card);
+
+        // start live ticker for this trip
+        tickProgress(trip);
+        const interval = setInterval(() => tickProgress(trip), 1000);
+
+        // store interval on card so we can clear it when deleted
+        card.dataset.interval = interval;
+    });
+}
+
+function getFlightProgress(departureStr, arrivalStr) {
+    const now = new Date();
+    const today = now.toDateString();
+
+    const dep = new Date(`${today} ${departureStr}`);
+    let arr = new Date(`${today} ${arrivalStr}`);
+
+    if (arr <= dep) arr.setDate(arr.getDate() + 1);
+
+    if (now < dep) {
+        const minsUntil = Math.round((dep - now) / 60000);
+        const label = minsUntil > 60
+            ? `Departing in ${Math.floor(minsUntil / 60)}h ${minsUntil % 60}m`
+            : `Departing in ${minsUntil}m`;
+        return { percent: 0, label };
+    }
+
+    if (now >= arr) {
+        return { percent: 100, label: "Landed ✅" };
+    }
+
+    const total = arr - dep;
+    const elapsed = now - dep;
+    const percent = Math.min(100, Math.round((elapsed / total) * 100));
+
+    const minsLeft = Math.round((arr - now) / 60000);
+    const label = minsLeft > 60
+        ? `${Math.floor(minsLeft / 60)}h ${minsLeft % 60}m remaining`
+        : `${minsLeft}m remaining`;
+
+    return { percent, label };
+}
+
+function tickProgress(trip) {
+    const fillEl    = document.getElementById(`fill-${trip.id}`);
+    const planeEl   = document.getElementById(`plane-${trip.id}`);
+    const statusEl  = document.getElementById(`status-${trip.id}`);
+    const percentEl = document.getElementById(`percent-${trip.id}`);
+
+    // card may have been deleted
+    if (!fillEl) return;
+
+    const progress = getFlightProgress(trip.departure_time, trip.arrival_time);
+
+    fillEl.style.width        = `${progress.percent}%`;
+    planeEl.style.left        = `${progress.percent}%`;
+    statusEl.textContent      = progress.label;
+    percentEl.textContent     = `${progress.percent}% complete`;
+
+    // color the bar based on state
+    if (progress.percent === 0) {
+        fillEl.style.background = "linear-gradient(90deg, #4a90e2, #7ec8f7)";
+        statusEl.style.color    = "rgba(255,255,255,0.5)";
+    } else if (progress.percent === 100) {
+        fillEl.style.background = "linear-gradient(90deg, #4ae290, #7ec8f7)";
+        statusEl.style.color    = "#4ae290";
+    } else {
+        fillEl.style.background = "linear-gradient(90deg, #4a90e2, #7ec8f7)";
+        statusEl.style.color    = "#7ec8f7";
+    }
+}
+
+async function deleteTrip(tripId, btnEl) {
+    const confirmed = confirm("Are you sure you want to delete this trip?");
+    if (!confirmed) return;
+
+    const card = btnEl.closest(".trip-card");
+
+    // clear the live interval before removing
+    clearInterval(Number(card.dataset.interval));
+
+    card.style.opacity = "0.5";
+    card.style.pointerEvents = "none";
+
+    const { error } = await supabaseClient
+        .from("trips")
+        .delete()
+        .eq("id", tripId);
+
+    if (error) {
+        alert("Error deleting trip: " + error.message);
+        card.style.opacity = "1";
+        card.style.pointerEvents = "auto";
+        return;
+    }
+
+    card.style.transition = "all 0.3s ease";
+    card.style.maxHeight  = "0";
+    card.style.padding    = "0";
+    card.style.overflow   = "hidden";
+    card.style.marginBottom = "0";
+    card.style.opacity    = "0";
+
+    setTimeout(() => card.remove(), 300);
+}
+
+loadTrips();
+</script>
+
+<script>
+async function loadUserInitial() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) return;
+
+    const firstName = user.user_metadata?.first_name;
+    if (firstName) {
+        const initial = firstName.charAt(0).toUpperCase();
+        document.getElementById("profileIcon").textContent = initial;
+    }
+}
+loadUserInitial();
+</script>
+
+<script>
+async function loadActivity() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) return;
+
+    const { data, error } = await supabaseClient
+        .from("trips")
+        .select("from_city, to_city, flight_number, created_at")
+        .eq("email", user.email)
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Error loading activity:", error.message);
+        return;
+    }
+
+    const container = document.getElementById("activityTimeline");
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No activity yet ✈️</p>";
+        return;
+    }
+
+    data.forEach(trip => {
+        const rawDate = trip.created_at;
+        const date = rawDate ? new Date(rawDate) : null;
+
+        const formattedDate = date && !isNaN(date)
+            ? date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
+            : "Date unavailable";
+
+        const formattedTime = date && !isNaN(date)
+            ? date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
+            : "";
+
+        const item = document.createElement("div");
+        item.className = "timeline-item";
+        item.innerHTML = `
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-title">✈️ Trip Created — ${trip.from_city} → ${trip.to_city}</div>
+                <div class="timeline-sub">Flight ${trip.flight_number}</div>
+                <div class="timeline-date">${formattedDate} at ${formattedTime}</div>
+            </div>
+        `;
+        container.appendChild(item);
+    });
+}
+loadActivity();
+</script>
+
+<script>
+const aboutBtn = document.getElementById("aboutBtn");
+const modal = document.getElementById("aboutModal");
+const closeBtn = document.getElementById("closeModal");
+
+// open modal
+aboutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    modal.style.display = "block";
+});
+
+// close modal (X)
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// close when clicking outside
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+</script>
+
+<script>
+// CONTACT MODAL
+const contactBtn = document.getElementById("contactBtn");
+const contactModal = document.getElementById("contactModal");
+const closeContactModal = document.getElementById("closeContactModal");
+
+contactBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    contactModal.style.display = "block";
+});
+
+closeContactModal.addEventListener("click", () => {
+    contactModal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+    if (e.target === contactModal) {
+        contactModal.style.display = "none";
+    }
+});
+</script>
+<script>
+/* ================= SETTINGS MODAL ================= */
+const settingsModal = document.getElementById("settingsModal");
+const settingsBtn = document.getElementById("settingsBtn");
+const closeSettings = document.getElementById("closeSettings");
+
+settingsBtn.onclick = () => {
+    settingsModal.style.display = "block";
+};
+
+closeSettings.onclick = () => {
+    settingsModal.style.display = "none";
+};
+
+window.onclick = (e) => {
+    if (e.target === settingsModal) {
+        settingsModal.style.display = "none";
+    }
+};
+
+/* ================= THEME SWITCH ================= */
+function setTheme(theme) {
+    if (theme === "light") {
+        document.body.style.background = "#f5f5f5";
+        document.body.style.color = "black";
+    } else {
+        document.body.style.background = "linear-gradient(135deg, #1e3c72, #2a5298)";
+        document.body.style.color = "white";
+    }
+
+    localStorage.setItem("theme", theme);
+}
+
+/* LOAD SAVED THEME */
+window.onload = () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) setTheme(savedTheme);
+};
+</script>
+
+</body>
+</html>

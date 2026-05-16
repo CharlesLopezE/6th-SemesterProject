@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No JetLag - Saved Schedules</title>
+    <link rel="stylesheet" href="./NoJetLag.css">
+</head>
+
+<body class="saved-schedules-page">
+
+<header>
+    <div class="logo-section">
+        <span>🌐</span>
+        <span style="font-size: 22px; font-weight: bold;">No JetLag</span>
+    </div>
+
+    <nav class="nav-links">
+        <a href="homepage.html">Home</a>
+        <a href="mytrip&act.html">My Trips</a>
+    </nav>
+
+    <div class="user-section">
+        <div class="profile-icon" id="profileIcon"></div>
+        <button class="logout-btn" id="logoutBtn">Log Out</button>
+    </div>
+</header>
+
+<main>
+
+    <!-- PAGE TITLE -->
+    <div class="tab-bar">
+        <div class="tab active-tab">Saved Schedules</div>
+    </div>
+
+    <!-- GRID -->
+    <div class="card-grid">
+        <div id="schedulesGrid" class="card-grid"></div>
+    </div>
+
+</main>
+
+<footer>
+    <a href="#" id="aboutBtn">About</a>
+    <a href="#" id="contactBtn">Contact Us</a>
+    <a href="#" id="settingsBtn">Settings ⚙️</a>
+</footer>
+
+<!-- ================= ABOUT MODAL ================= -->
+<div id="aboutModal" class="modal">
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeModal">&times;</span>
+
+        <h2>No Jet Lag</h2>
+
+        <p>What is it about?<p>
+
+        <ul style="line-height: 1.6; padding-left: 20px;">
+            <li>
+                No Jet Lag is a travel assistant platform designed to help travelers
+                reduce jet lag by generating personalized sleep schedules based on
+                their flight details.
+            </li>
+
+            <li>
+                Travelers can save schedules, receive notifications during travel,
+                and follow guided sleep patterns to adjust smoothly across time zones.
+            </li>
+
+            <li>
+                This system integrates a website application, using custom APIs
+                and GPS data to optimize travel experiences.
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<!-- ================= CONTACT MODAL ================= -->
+<div id="contactModal" class="modal">
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeContactModal">&times;</span>
+
+        <h2>Contact Us</h2>
+
+        <ul style="line-height: 1.6; padding-left: 20px;">
+            <li><strong>Email:</strong> support@nojetlag.com</li>
+            <li><strong>Phone:</strong> (123) 456-7890</li>
+            <li><strong>Hours:</strong> Mon–Fri, 9AM – 6PM</li>
+            <li><strong>Hours:</strong> Sat–Sun, 10AM – 5PM</li>
+        </ul>
+
+        <p style="margin-top:15px; font-size: 0.9rem;">
+            We’re here to help you travel smarter ✈️
+        </p>
+
+    </div>
+</div>
+<!-- ================= SETTINGS MODAL ================= -->
+<div id="settingsModal" class="modal">
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeSettings">&times;</span>
+
+        <h2>Settings ⚙️</h2>
+
+        <h3>Theme</h3>
+        <div style="display:flex; gap:15px; margin-top:10px;">
+            <button class="theme-btn" onclick="setTheme('dark')">🌙 Dark</button>
+            <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="supdb.config.js"></script>
+
+<script>
+/* AUTH GUARD */
+async function checkAuth() {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (!session) { window.location.href = "login.html"; }
+}
+checkAuth();
+
+/* LOGOUT */
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  window.location.href = "login.html";
+});
+
+/* PROFILE INITIAL */
+async function loadUserInitial() {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  if (!user) return;
+  const firstName = user.user_metadata?.first_name;
+  if (firstName) {
+    document.getElementById("profileIcon").textContent =
+      firstName.charAt(0).toUpperCase();
+  }
+}
+loadUserInitial();
+
+/* LOAD SCHEDULES */
+async function loadSchedules() {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  if (!user) return;
+
+  const { data, error } = await supabaseClient
+    .from("schedules")
+    .select("*")
+    .eq("email", user.email)
+    .order("created_at", { ascending: false });
+
+  const grid = document.getElementById("schedulesGrid");
+
+  if (error) {
+    grid.innerHTML = "<p>Error loading schedules.</p>";
+    return;
+  }
+
+  if (!data.length) {
+    grid.innerHTML = `<p style="opacity:0.6;">No saved schedules yet. Generate one on the homepage! ✈️</p>`;
+    return;
+  }
+
+  grid.innerHTML = "";
+
+  data.forEach(s => {
+    const dirLabel = s.direction === "east" ? "Eastward ➡️"
+                   : s.direction === "west" ? "Westward ⬅️"
+                   : "No shift";
+    const absDiff  = Math.abs(s.tz_diff);
+    const days     = s.schedule_json || [];
+
+    // Build collapsible day-by-day tips
+    const tipsHtml = days.map(day => `
+      <div style="margin-bottom:10px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);
+        background:rgba(255,255,255,0.04); overflow:hidden;">
+        <div style="padding:8px 12px; background:rgba(255,255,255,0.07);
+          font-weight:600; font-size:0.8rem; border-bottom:1px solid rgba(255,255,255,0.08);">
+          ${day.emoji} ${day.label}
+        </div>
+        <ul style="margin:0; padding:10px 12px; list-style:none;
+          display:flex; flex-direction:column; gap:5px;">
+          ${day.tips.map(t => `
+            <li style="font-size:0.78rem; display:flex; gap:8px;
+              align-items:flex-start; opacity:0.85; line-height:1.5;">
+              <span style="min-width:18px;">${t.icon}</span>
+              <span>${t.text}</span>
+            </li>
+          `).join("")}
+        </ul>
+      </div>
+    `).join("");
+
+    const card = document.createElement("div");
+    card.className = "schedule-card";
+    card.style.cssText = `
+      width: 280px; height: auto; cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    `;
+
+    card.innerHTML = `
+      <!-- Summary (always visible) -->
+      <div class="card-summary">
+        <div style="font-size:1rem; font-weight:600; margin-bottom:8px;">
+          ✈️ ${s.from_city} → ${s.to_city}
+        </div>
+        <div style="font-size:0.8rem; line-height:1.7; color:rgba(255,255,255,0.75);">
+          <strong>Flight:</strong> ${s.flight_number}<br>
+          <strong>Departure:</strong> ${s.departure_time}<br>
+          <strong>Arrival:</strong> ${s.arrival_time}<br>
+          <strong>Shift:</strong> ${absDiff}h ${dirLabel}
+        </div>
+        <div style="margin-top:10px; font-size:0.75rem; opacity:0.45; text-align:right;">
+          🗓 ${new Date(s.created_at).toLocaleDateString("en-US",
+            { year:"numeric", month:"short", day:"numeric" })}
+        </div>
+        <div style="margin-top:8px; font-size:0.75rem; color:rgba(74,144,226,0.9); text-align:center;">
+          ▼ Tap to expand schedule
+        </div>
+      </div>
+
+      <!-- Full tips (hidden by default) -->
+      <div class="card-details" style="display:none; margin-top:14px;
+        border-top:1px solid rgba(255,255,255,0.1); padding-top:14px;">
+        ${tipsHtml}
+        <button onclick="deleteSchedule(${s.id}, this)" style="
+          width:100%; margin-top:8px; padding:8px;
+          background:rgba(255,80,80,0.15);
+          border:1px solid rgba(255,80,80,0.4);
+          color:rgba(252,217,217,0.9); border-radius:8px;
+          font-size:0.8rem; cursor:pointer; transition:0.2s;">
+          🗑 Delete Schedule
+        </button>
+      </div>
+    `;
+
+    // Toggle expand/collapse
+    card.querySelector(".card-summary").addEventListener("click", () => {
+      const details  = card.querySelector(".card-details");
+      const hint     = card.querySelector(".card-summary div:last-child");
+      const expanded = details.style.display !== "none";
+      details.style.display = expanded ? "none" : "block";
+      hint.textContent      = expanded ? "▼ Tap to expand schedule" : "▲ Tap to collapse";
+    });
+
+    grid.appendChild(card);
+  });
+}
+loadSchedules();
+
+/* DELETE */
+async function deleteSchedule(id, btnEl) {
+  if (!confirm("Delete this saved schedule?")) return;
+
+  const card = btnEl.closest(".schedule-card");
+  card.style.opacity = "0.4";
+  card.style.pointerEvents = "none";
+
+  const { error } = await supabaseClient
+    .from("schedules")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Error deleting: " + error.message);
+    card.style.opacity = "1";
+    card.style.pointerEvents = "auto";
+    return;
+  }
+
+  card.style.transition = "all 0.3s ease";
+  card.style.opacity    = "0";
+  card.style.maxHeight  = "0";
+  card.style.padding    = "0";
+  card.style.overflow   = "hidden";
+  setTimeout(() => card.remove(), 300);
+}
+</script>
+
+<script>
+const aboutBtn = document.getElementById("aboutBtn");
+const modal = document.getElementById("aboutModal");
+const closeBtn = document.getElementById("closeModal");
+
+// open modal
+aboutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    modal.style.display = "block";
+});
+
+// close modal (X)
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// close when clicking outside
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+</script>
+
+<script>
+// CONTACT MODAL
+const contactBtn = document.getElementById("contactBtn");
+const contactModal = document.getElementById("contactModal");
+const closeContactModal = document.getElementById("closeContactModal");
+
+contactBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    contactModal.style.display = "block";
+});
+
+closeContactModal.addEventListener("click", () => {
+    contactModal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+    if (e.target === contactModal) {
+        contactModal.style.display = "none";
+    }
+});
+</script>
+
+<script>
+/* ================= SETTINGS MODAL ================= */
+const settingsModal = document.getElementById("settingsModal");
+const settingsBtn = document.getElementById("settingsBtn");
+const closeSettings = document.getElementById("closeSettings");
+
+settingsBtn.onclick = () => {
+    settingsModal.style.display = "block";
+};
+
+closeSettings.onclick = () => {
+    settingsModal.style.display = "none";
+};
+
+window.onclick = (e) => {
+    if (e.target === settingsModal) {
+        settingsModal.style.display = "none";
+    }
+};
+
+/* ================= THEME SWITCH ================= */
+function setTheme(theme) {
+    if (theme === "light") {
+        document.body.style.background = "#f5f5f5";
+        document.body.style.color = "black";
+    } else {
+        document.body.style.background = "linear-gradient(135deg, #1e3c72, #2a5298)";
+        document.body.style.color = "white";
+    }
+
+    localStorage.setItem("theme", theme);
+}
+
+/* LOAD SAVED THEME */
+window.onload = () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) setTheme(savedTheme);
+};
+</script>
+
+</body>
+</html>

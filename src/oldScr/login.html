@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No JetLag - Login</title>
+    <link rel="stylesheet" href="./NoJetLag.css">
+</head>
+
+<body class="login-page">
+
+<h1>No JetLag</h1>
+
+<div class="login-card">
+    <h2>Log In</h2>
+
+    <form id="loginForm">
+
+        <div class="input-group">
+            <label>Email</label>
+            <div class="input-wrapper">
+                <span class="icon">✉</span>
+                <input id="email" type="email" placeholder="email@example.com" required>
+            </div>
+        </div>
+
+
+        <div class="input-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <span class="icon">🔒</span>
+                <input id="password" type="password" placeholder="Password" required>
+            </div>
+        </div>
+
+        <!-- ✅ FIX: button is NOT submit -->
+        <button type="submit" class="continue-btn" onclick="handleLogin()">
+            Continue
+        </button>
+
+        <p class="signup-text">
+            Need an account? <a href="signin.html">Sign up</a>
+        </p>
+
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="./supdb.config.js"></script>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+    });
+
+    if (error) {
+        alert("Login failed: " + error.message);
+        return;
+    }
+
+    window.location.href = "homepage.html";
+});
+</script>
+
+</body>
+</html>

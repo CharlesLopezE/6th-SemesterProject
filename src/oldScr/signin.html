@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No JetLag - Sign Up</title>
+    <link rel="stylesheet" href="./NoJetLag.css">
+</head>
+
+<body class="sign-page">
+
+<h1>No JetLag</h1>
+
+<div class="login-card">
+    <h2>Sign Up</h2>
+
+    <form id="signupForm">
+
+        <div style="display:flex; gap:10px;">
+            <div class="input-group" style="flex:1;">
+                <label>First Name</label>
+                <div class="input-wrapper">
+                    <span class="icon">👤</span>
+                    <input id="firstName" placeholder="John" required>
+                </div>
+            </div>
+
+            <div class="input-group" style="flex:1;">
+                <label>Email</label>
+                <div class="input-wrapper">
+                    <span class="icon">✉</span>
+                    <input id="email" type="email" placeholder="email@example.com" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <span class="icon">🔒</span>
+                <input id="password" type="password" placeholder="Password" required>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Password</label>
+            <div class="input-wrapper">
+                <span class="icon">🔒</span>
+                <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
+            </div>
+        </div>
+
+        <button class="continue-btn" onclick="handleSignup(event)">
+            Create Account
+        </button>
+
+        <p class="signup-text">
+            Already have an account? <a href="login.html">Log in</a>
+        </p>
+
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="./supdb.config.js"></script>
+
+<script>
+async function handleSignup(event) {
+    event.preventDefault(); // 🚨 prevents page refresh
+
+    const firstName = document.getElementById("firstName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+            data: { first_name: firstName }
+        }
+    });
+
+    if (error) {
+        alert("Signup failed: " + error.message);
+        return;
+    }
+
+    alert("Account created! Please log in.");
+
+    // ✅ THIS is what sends them to login
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

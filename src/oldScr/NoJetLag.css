@@ -1,0 +1,1118 @@
+body.sign-page {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url(./airplane.png), radial-gradient(circle at center, #1e3a5f 0%, #0a192f 100%);
+    background-size: 90%, cover;
+    background-repeat: no-repeat, no-repeat;
+    color: white;
+}
+
+/* Title */
+.sign-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+/* Card */
+.sign-page .login-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 350px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Subtitle */
+.sign-page h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+.sign-page .input-group {
+    margin-bottom: 1.5rem;
+}
+
+.sign-page label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.sign-page .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sign-page .icon {
+    position: absolute;
+    left: 12px;
+    color: #888;
+    font-size: 1rem;
+}
+
+.sign-page input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.sign-page input::placeholder {
+    color: #666;
+}
+
+/* Text */
+.sign-page .signup-text {
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+    color: #ddd;
+    text-align: center;
+}
+
+.sign-page .signup-text a {
+    color: #4a90e2;
+    text-decoration: none;
+}
+
+/* Buttons */
+.sign-page .continue-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.sign-page .continue-btn:hover {
+    background-color: #222;
+}
+
+/*Login-page styles*/
+body.login-page {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: url(./airplane.png), radial-gradient(circle at center, #1e3a5f 0%, #0a192f 100%);
+            background-size: 90%, cover;
+            background-repeat: no-repeat, no-repeat;
+            color: white;
+        }
+
+
+        .login-page h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+
+        .login-page .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 350px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+
+        .login-page h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+
+        .login-page .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+
+        .login-page label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+
+        .login-page .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+
+        /* Basic styling for icons */
+        .login-page .icon {
+            position: absolute;
+            left: 12px;
+            color: #888;
+            font-size: 1rem;
+        }
+
+
+        .login-page input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+
+        .login-page input::placeholder {
+            color: #666;
+        }
+
+
+        .login-page .signup-text {
+            font-size: 0.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #ddd;
+        }
+
+
+        .login-page .signup-text a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+
+
+        .login-page .continue-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+
+        .login-page .continue-btn:hover {
+            background-color: #222;
+        }
+
+/* Homepage styles */
+body.home-page {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .home-page header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(11, 167, 240, 0.233);
+        }
+
+        .home-page .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-page .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .home-page .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .home-page .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .home-page .profile-icon {
+                width: 30px;
+                height: 30px;
+                background: #4a90e2;
+                border-radius: 50%;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                font-weight: bold;
+                color: white;
+                font-size: 14px;
+        }
+
+        .home-page .logout-btn {
+            border: 1px solid rgba(245, 245, 245, 0.493);
+            padding: 5px 15px;
+            border-radius: 10px;
+            background-color: #1d1717;
+            color: white;
+            cursor: pointer;
+        }
+
+        .home-page .container {
+            display: flex;
+            flex: 1;
+            padding: 40px;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .home-page .panel {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .home-page .left-side {
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .home-page .right-side {
+            flex: 1;
+            max-width: 500px;
+            overflow: auto;
+            max-height: calc(94.7vh - 160px);
+        }
+
+        .home-page h2 {
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .home-page .sub-panel {
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        .home-page .flight-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .home-page .form-control {
+            width: 70%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            background-color: #858585;
+        }
+        .home-page .form-control::placeholder {
+                color: #686767;
+        }
+
+        .home-page label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .home-page input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+        }
+
+        .home-page .generate-btn {
+            background: black;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            grid-column: 1 / -1;
+        }
+
+        .home-page footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 18px 40px;
+            gap: 35px;
+
+            background: rgba(11, 167, 240, 0.233);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+            font-size: 0.9rem;
+        }
+
+        .home-page footer a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: 0.2s ease;
+            position: relative;
+        }
+
+        /* hover effect */
+        .home-page footer a:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* underline animation */
+        .home-page footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 1px;
+            background: white;
+            transition: 0.3s ease;
+        }
+
+        .home-page footer a:hover::after {
+            width: 100%;
+        }
+
+        /* settings button style */
+        .home-page .footer-settings {
+            padding: 6px 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            transition: 0.2s ease;
+        }
+
+        .home-page .footer-settings:hover {
+            background: rgba(255,255,255,0.1);
+        }
+/* ================= MODAL ================= */
+.home-page .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+}
+
+/* Modal box */
+.home-page .modal-content {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    margin: 10% auto;
+    padding: 30px;
+    width: 400px;
+    border-radius: 12px;
+    color: white;
+    position: relative;
+
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* Close button */
+.home-page .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.home-page .close-btn:hover {
+    color: #000000;
+}
+
+.home-page .theme-btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: 0.2s;
+}
+
+.home-page .theme-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
+.home-page .ac-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.home-page .ac-item:last-child { border-bottom: none; }
+.home-page .ac-item:hover { background: rgba(255,255,255,0.12); }
+.home-page .ac-item .ac-code { font-weight: 700; color: #7ec8f7; font-size: 0.8rem; }
+.home-page .ac-item .ac-sub { color: rgba(255,255,255,0.5); font-size: 0.75rem; }
+/*My Trrip & Activities styles */
+body.my-trip-activities-page {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .my-trip-activities-page header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(11, 167, 240, 0.233);
+        }
+
+        .my-trip-activities-page .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .my-trip-activities-page .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .my-trip-activities-page .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .my-trip-activities-page .profile-icon {
+            width: 30px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 50%;
+        }
+
+        .my-trip-activities-page .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .my-trip-activities-page .profile-icon {
+            width: 30px;
+            height: 30px;
+            background: #4a90e2;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+        }
+
+        .my-trip-activities-page .logout-btn {
+            border: 1px solid rgba(245, 245, 245, 0.493);
+            padding: 5px 15px;
+            border-radius: 10px;
+            background-color: #1d1717;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Content */
+        .my-trip-activities-page main {
+            padding: 40px 60px;
+            flex-grow: 1;
+        }
+
+        /* ================= TAB BUTTONS (INSIDE PAGE) ================= */
+        .my-trip-activities-page .tab-bar {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .my-trip-activities-page .tab {
+            cursor: pointer;
+            padding: 10px 18px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.2s ease;
+        }
+
+        .my-trip-activities-page .tab:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .my-trip-activities-page .active-tab {
+            background: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        .my-trip-activities-page h2 {
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .my-trip-activities-page .trip-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+
+        .my-trip-activities-page .trip-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            font-weight: normal;
+            font-weight: 500;
+        }
+
+.my-trip-activities-page .delete-btn {
+    background: rgba(255, 80, 80, 0.15);
+    border: 1px solid rgba(255, 80, 80, 0.4);
+    color: rgba(252, 217, 217, 0.9);
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.my-trip-activities-page .delete-btn:hover {
+    background: rgba(255, 80, 80, 0.3);
+    border-color: rgba(255, 80, 80, 0.7);
+    color: white;
+}
+/* ================= MODAL ================= */
+.my-trip-activities-page .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+}
+
+/* Modal box */
+.my-trip-activities-page .modal-content {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    margin: 10% auto;
+    padding: 30px;
+    width: 400px;
+    border-radius: 12px;
+    color: white;
+    position: relative;
+
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* Close button */
+.my-trip-activities-page .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.my-trip-activities-page .close-btn:hover {
+    color: #000000;
+}
+
+.my-trip-activities-page .theme-btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: 0.2s;
+}
+
+.my-trip-activities-page .theme-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+/* ================= PROGRESS BAR ================= */
+.my-trip-activities-page .progress-section {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.my-trip-activities-page .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 8px;
+}
+
+.my-trip-activities-page .progress-status {
+    font-size: 12px;
+    color: #7ec8f7;
+    font-weight: 500;
+}
+
+.my-trip-activities-page .progress-bar-track {
+    position: relative;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: visible;
+}
+
+.my-trip-activities-page .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2, #7ec8f7);
+    border-radius: 999px;
+    transition: width 0.6s ease;
+}
+
+.my-trip-activities-page .progress-plane {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.my-trip-activities-page .progress-percent {
+    text-align: right;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 6px;
+}
+
+        .my-trip-activities-page .trip-details {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .my-trip-activities-page .panel {
+            display: none;
+        }
+
+        .my-trip-activities-page .panel.active {
+            display: flex;
+            flex-direction: column;
+            padding-left: 20px;
+            border-left: 2px solid rgba(255, 255, 255, 0.15);
+            margin-top: 10px;
+            
+        }
+
+        .my-trip-activities-page .trip-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        .my-trip-activities-page .trip-details {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ================= TIMELINE ================= */
+
+.my-trip-activities-page .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: 24px;
+    position: relative;
+}
+
+
+.my-trip-activities-page .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.my-trip-activities-page .timeline-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+}
+
+.my-trip-activities-page .timeline-sub {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.my-trip-activities-page .timeline-date {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 2px;
+}
+
+        .my-trip-activities-page footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 18px 40px;
+            gap: 35px;
+
+            background: rgba(11, 167, 240, 0.233);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+            font-size: 0.9rem;
+        }
+
+        .my-trip-activities-page footer a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: 0.2s ease;
+            position: relative;
+        }
+
+        /* hover effect */
+        .my-trip-activities-page footer a:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* underline animation */
+        .my-trip-activities-page footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 1px;
+            background: white;
+            transition: 0.3s ease;
+        }
+
+        .my-trip-activities-page footer a:hover::after {
+            width: 100%;
+        }
+
+        /* settings button style */
+        .my-trip-activities-page .footer-settings {
+            padding: 6px 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            transition: 0.2s ease;
+        }
+
+        .my-trip-activities-page .footer-settings:hover {
+            background: rgba(255,255,255,0.1);
+        }
+/* Saved Schedules styles */
+body.saved-schedules-page {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        body.saved-schedules-page header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(11, 167, 240, 0.233);
+        }
+
+        .saved-schedules-page .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .saved-schedules-page .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .saved-schedules-page .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .saved-schedules-page .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .saved-schedules-page .profile-icon {
+            width: 30px;
+            height: 30px;
+            background: #4a90e2;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+        }
+
+        .saved-schedules-page .logout-btn {
+            border: 1px solid rgba(245, 245, 245, 0.493);
+            padding: 5px 15px;
+            border-radius: 10px;
+            background-color: #1d1717;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* MAIN */
+        body.saved-schedules-page main {
+            padding: 40px 60px;
+            flex-grow: 1;
+        }
+
+        /* TAB BAR */
+        .saved-schedules-page .tab-bar {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .saved-schedules-page .tab {
+            cursor: pointer;
+            padding: 10px 18px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.2s ease;
+        }
+
+        .saved-schedules-page .tab:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .saved-schedules-page .active-tab {
+            background: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        /* CARDS */
+        .saved-schedules-page .card-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .saved-schedules-page .schedule-card {
+            width: 250px;
+            height: 200px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            transition: 0.2s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        .saved-schedules-page .schedule-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.12);
+        }
+
+        .saved-schedules-page .schedule-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .saved-schedules-page .schedule-info {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #ddd;
+        }
+
+        /* FOOTER */
+        .saved-schedules-page footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 18px 40px;
+            gap: 35px;
+            background: rgba(11, 167, 240, 0.233);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.9rem;
+        }
+
+        .saved-schedules-page footer a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .saved-schedules-page footer a:hover {
+            color: white;
+        }
+
+        .saved-schedules-page footer a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 1px;
+            background: white;
+            transition: 0.3s ease;
+        }
+
+        .saved-schedules-page footer a:hover::after {
+            width: 100%;
+        }
+
+        .saved-schedules-page h2 {
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            font-weight: normal;
+        }
+        /* ================= MODAL ================= */
+.saved-schedules-page .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+}
+
+/* Modal box */
+.saved-schedules-page .modal-content {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    margin: 10% auto;
+    padding: 30px;
+    width: 400px;
+    border-radius: 12px;
+    color: white;
+    position: relative;
+
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* Close button */
+.saved-schedules-page .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.saved-schedules-page .close-btn:hover {
+    color: #000000;
+}
+
+.saved-schedules-page .theme-btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: 0.2s;
+}
+
+.saved-schedules-page .theme-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
